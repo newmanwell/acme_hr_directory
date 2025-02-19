@@ -5,8 +5,8 @@ const { createEmployee } = require('./employees.js');
 const dropTables = async() => {
   try {
     await client.query(`
-      DROP TABLE IF EXISTS departments;
       DROP TABLE IF EXISTS employees;
+      DROP TABLE IF EXISTS departments;
       `)
   } catch(error) {
     console.log(error);
@@ -20,7 +20,13 @@ const createTables = async() => {
       id SERIAL PRIMARY KEY,
       name VARCHAR(30) UNIQUE NOT NULL
       );
-      `);
+
+      CREATE TABLE employees (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(36) NOT NULL,
+        dept_id INTEGER REFERENCES departments(id)
+      );
+    `);
   } catch(error) {
     console.log(error);
   }
@@ -44,6 +50,12 @@ const syncAndSeed = async() => {
     const frontOffice = await createDepartment('Front Office');
     const infoTech = await createDepartment('Info Tech');
     console.log('Departments Created')
+
+    console.log('Creating Employees');
+    await createEmployee('Shaun Newman', warehouse.id);
+    await createEmployee('Joe Callahan', frontOffice.id);
+    await createEmployee('Ryan Matthews', infoTech.id);
+    console.log('Employees Created');
 
     await client.end();
     console.log('Disconnected from Acme DB');
