@@ -2,6 +2,17 @@ const client = require('./client.js');
 const { createDepartment } = require('./departments.js');
 const { createEmployee } = require('./employees.js');
 
+const dropTables = async() => {
+  try {
+    await client.query(`
+      DROP TABLE IF EXISTS departments;
+      DROP TABLE IF EXISTS employees;
+      `)
+  } catch(error) {
+    console.log(error);
+  }
+}
+
 const createTables = async() => {
   try {
     await client.query(`
@@ -19,6 +30,10 @@ const syncAndSeed = async() => {
   try {
     await client.connect();
     console.log('Connected to Acme DB');
+
+    console.log('Dropping Tables')
+    dropTables();
+    console.log('Tables Dropped');
 
     console.log('Creating Tables');
     await createTables();
