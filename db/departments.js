@@ -14,4 +14,4 @@ const createDepartment = async(teamName) => {
   }
 }
 
-module.exports = { createDepartment };
+module.exports = { createDepartment }
