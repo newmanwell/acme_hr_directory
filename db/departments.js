@@ -14,4 +14,15 @@ const createDepartment = async(teamName) => {
   }
 }
 
-module.exports = { createDepartment }
+const getDepartments = async() => {
+  try {
+    const { rows } = await client.query(`
+      SELECT * FROM departments;
+      `);
+    return rows;
+  } catch(error) {
+    console.log(error);
+  }
+}
+
+module.exports = { createDepartment, getDepartments }
