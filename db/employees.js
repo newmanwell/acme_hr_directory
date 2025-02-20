@@ -14,4 +14,16 @@ const createEmployee = async(employeeName, departmentID) => {
   }
 }
 
-module.exports = { createEmployee }
+const getEmployees = async() => {
+  try {
+    const { rows } = await client.query(`
+      SELECT * FROM employees;
+      `);
+    return rows;
+  } catch(error) {
+    console.log(error);
+  }
+}
+
+
+module.exports = { createEmployee, getEmployees }
