@@ -25,5 +25,16 @@ const getEmployees = async() => {
   }
 }
 
+const deleteEmployee = async(deletedEmployeeId) => {
+  try {
+    const { rows } = await client.query(`
+      DELETE FROM employees WHERE id=${deletedEmployeeId}
+      `)
+      return rows
+  } catch(error) {
+    console.log(error);
+  }
+}
 
-module.exports = { createEmployee, getEmployees }
+
+module.exports = { createEmployee, getEmployees, deleteEmployee }
