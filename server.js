@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const port = 8080;
-
+app.use(express.json());
 const { createEmployee, getEmployees } = require('./db/employees.js');
 const { getDepartments } = require('./db/departments.js');
 
@@ -16,6 +16,17 @@ app.get('/api/employees', async(req, res) => {
 app.get('/api/departments', async(req, res) => {
   res.send(await getDepartments());
 });
+
+app.post('/api/employees', async(req, res) => {
+  const { name, dept_id } = req.body;
+
+  try {
+    const newEmployee = await createEmployee(name, dept_id);
+    res.send(newEmployee);
+  } catch(error) {
+    console.log(error);
+  }
+})
 
 
 
