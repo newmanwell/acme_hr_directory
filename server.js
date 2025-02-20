@@ -8,7 +8,6 @@ app.use(express.json());
 
 const client = require('./db/client.js');
 client.connect();
-console.log(getEmployees);
 
 // Show employees
 app.get('/api/employees', async(req, res) => {
@@ -42,7 +41,5 @@ app.delete('/api/employees/:id', async(req, res) => {
     console.log(error);
   }
 });
-
-
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
